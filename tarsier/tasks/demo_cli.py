@@ -16,11 +16,11 @@ import os
 import torch
 from copy import deepcopy
 from transformers import StoppingCriteriaList
-from tasks.utils import load_model_and_processor
-from dataset.utils import *
-from tools.conversation import Chat, conv_templates, StoppingCriteriaSub
+from tarsier.tasks.utils import load_model_and_processor
+from tarsier.dataset.utils import *
+from tarsier.tools.conversation import Chat, conv_templates, StoppingCriteriaSub
 from transformers import TextStreamer
-from tools.color import Color
+from tarsier.tools.color import Color
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

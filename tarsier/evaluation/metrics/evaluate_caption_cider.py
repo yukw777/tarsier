@@ -15,9 +15,9 @@ import json
 from typing import List, Dict
 import os
 from pycocoevalcap.cider.cider import Cider
-from tools.ptbtokenizer import PTBTokenizer
+from tarsier.tools.ptbtokenizer import PTBTokenizer
 
-from tools.color import Color
+from tarsier.tools.color import Color
 
 class CIDErMetric:
     def __init__(self, dataset_name, verbose=False) -> None:
@@ -28,7 +28,7 @@ class CIDErMetric:
         self.results = []
         self.dataset = []
         self.verbose = verbose
-    
+
     def add(self, data):
         self.dataset.append(data)
 
@@ -67,7 +67,7 @@ class CIDErMetric:
         ]
         for info in self.eval_records:
             print(info)
-    
+
     def save_results(self, pred_path):
         if os.path.isdir(pred_path):
             output_dir = os.path.join(pred_path, 'eval_records')

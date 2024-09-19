@@ -16,9 +16,9 @@
 from copy import deepcopy
 import gradio as gr
 from gradio.themes.utils import colors, fonts, sizes
-from tools.conversation import Chat, conv_templates
-from tasks.utils import load_model_and_processor, file_to_base64
-from dataset.processor import Processor
+from tarsier.tools.conversation import Chat, conv_templates
+from tarsier.tasks.utils import load_model_and_processor, file_to_base64
+from tarsier.dataset.processor import Processor
 import os
 import torch
 
@@ -158,7 +158,7 @@ with gr.Blocks(title="Tarsier",theme=gvlabtheme,css="#chatbot {overflow:auto; he
                     up_gif = gr.File(type="filepath", file_count="single", file_types=["gif"], interactive=True, elem_id="gif_upload", height=360)
             upload_button = gr.Button(value="Upload & Start Chat", interactive=True, variant="primary")
             clear = gr.Button("Restart")
-            
+
             # num_beams = gr.Slider(
             #     minimum=1,
             #     maximum=10,
@@ -167,7 +167,7 @@ with gr.Blocks(title="Tarsier",theme=gvlabtheme,css="#chatbot {overflow:auto; he
             #     interactive=True,
             #     label="beam search numbers)",
             # )
-            
+
             temperature = gr.Slider(
                 minimum=0.0,
                 maximum=1.0,
@@ -185,7 +185,7 @@ with gr.Blocks(title="Tarsier",theme=gvlabtheme,css="#chatbot {overflow:auto; he
                 interactive=True,
                 label="Top_p",
             )
-            
+
             num_frames = gr.Slider(
                 minimum=4,
                 maximum=16,
@@ -194,7 +194,7 @@ with gr.Blocks(title="Tarsier",theme=gvlabtheme,css="#chatbot {overflow:auto; he
                 interactive=True,
                 label="#Frames",
             )
-        
+
         with gr.Column(visible=True)  as input_raws:
             chat_state = gr.State()
             img_list = gr.State()
@@ -206,18 +206,18 @@ with gr.Blocks(title="Tarsier",theme=gvlabtheme,css="#chatbot {overflow:auto; he
                 with gr.Column(scale=0.15, min_width=0):
                     run = gr.Button("💭Send")
                 with gr.Column(scale=0.15, min_width=0):
-                    clear = gr.Button("🔄Clear️")     
-    
+                    clear = gr.Button("🔄Clear️")
+
     chat = init_model()
     upload_button.click(upload_img, [up_image, up_video, up_gif, chat_state, num_frames], [up_image, up_video, up_gif, text_input, upload_button, chat_state, img_file, img_list])
-    
+
     text_input.submit(gradio_ask, [text_input, chatbot, chat_state], [text_input, chatbot, chat_state]).then(
         gradio_answer, [chatbot, chat_state, img_file, img_list, top_p, temperature, num_frames], [chatbot, chat_state, img_list]
     )
     run.click(gradio_ask, [text_input, chatbot, chat_state], [text_input, chatbot, chat_state]).then(
         gradio_answer, [chatbot, chat_state, img_file, img_list, top_p, temperature, num_frames], [chatbot, chat_state, img_list]
     )
-    run.click(lambda: "", None, text_input)  
+    run.click(lambda: "", None, text_input)
     clear.click(gradio_reset, [chat_state, img_file, img_list], [chatbot, up_image, up_video, up_gif, text_input, upload_button, chat_state, img_file, img_list], queue=False)
 
 

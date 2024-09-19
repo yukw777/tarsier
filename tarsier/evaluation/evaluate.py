@@ -15,9 +15,9 @@ import os
 import random
 
 from .metrics import CIDErMetric, GPTMetric, DREAMGPTMetric, AccuracyMetric, VideoMMEAccuracyMetric
-from tools.rw_utils import read_jsonlines
-from tools.color import Color
-from dataset.utils import get_benchmarks
+from tarsier.tools.rw_utils import read_jsonlines
+from tarsier.tools.color import Color
+from tarsier.dataset.utils import get_benchmarks
 
 def read_dataset(path, dataset_name):
     if os.path.isdir(path):
@@ -132,13 +132,13 @@ if __name__ == '__main__':
     }
 
     METRIC2DATASET = []
-    
+
     for bm in args.benchmarks:
         if bm not in Benchmark2Metric:
             print(Color.red(f"Unknown benchmark: {bm}"))
             continue
 
-        METRIC2DATASET.append([Benchmark2Metric[bm], Benchmark2Dataset[bm]])   
+        METRIC2DATASET.append([Benchmark2Metric[bm], Benchmark2Dataset[bm]])
 
     evaluate_all(args.pred_file, METRIC2DATASET, args.sample_num, args.verbose)
 

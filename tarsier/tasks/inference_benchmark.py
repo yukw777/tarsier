@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import argparse
-from tasks.utils import load_model_and_processor
-from dataset.mm_dataset import MMDataset
-from dataset.utils import get_benchmarks
+from tarsier.tasks.utils import load_model_and_processor
+from tarsier.dataset.mm_dataset import MMDataset
+from tarsier.dataset.utils import get_benchmarks
 
 import json
 import os
@@ -71,7 +71,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
 
     # Define the command-line arguments
-    
+
     parser.add_argument('--model_name_or_path', type=str, required=True)
     parser.add_argument("--max_n_frames", type=int, default=8, help="Max number of frames to apply average sampling from the given video.")
     parser.add_argument("--max_new_tokens", type=int, default=512, help="max number of generated tokens")

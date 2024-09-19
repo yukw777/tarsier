@@ -19,7 +19,7 @@ from transformers import StoppingCriteria, StoppingCriteriaList
 
 from enum import auto, Enum
 import os
-from dataset.processor import Processor
+from tarsier.dataset.processor import Processor
 import re
 
 
@@ -79,7 +79,7 @@ class Chat:
     def prepare_model_inputs(self, conv, visual_data_file=None, images=None, n_frames=None):
         conv.messages.append([conv.roles[1], None])
         conv.messages[0][1] = re.sub(f"({IMAGE_TOKEN}|{VIDEO_TOKEN})\n*", "", conv.messages[0][1])
-        
+
         if images is None or isinstance(images, list) and len(images) == 0:
             if isinstance(visual_data_file, str) and os.path.exists(visual_data_file):
                 images = self.processor.load_images(visual_data_file, n_frames)
@@ -89,7 +89,7 @@ class Chat:
                 images = None
             else:
                 raise NotImplementedError
-        
+
         if isinstance(images, list) and len(images) > 0:
             conv.messages[0][1] = IMAGE_TOKEN*len(images) + '\n' + conv.messages[0][1]
 
@@ -203,4 +203,3 @@ conv_templates = {
     "tarsier-13b": conv_tarsier,
     "tarsier-34b": conv_tarsier_yi,
 }
-

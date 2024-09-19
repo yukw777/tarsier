@@ -399,7 +399,7 @@ class TarsierForConditionalGeneration(TarsierPreTrainedModel):
         self.vision_tower = AutoModel.from_config(config.vision_config, trust_remote_code=True)
         self.multi_modal_projector = LlavaMultiModalProjector(config)
         self.vocab_size = config.vocab_size
-        self.language_model = AutoModelForCausalLM.from_config(config.text_config, attn_implementation="flash_attention_2")
+        self.language_model = AutoModelForCausalLM.from_config(config.text_config, attn_implementation=config._attn_implementation)
         image_newline_idx = torch.tensor([config.image_newline_idx], dtype=torch.long)
         image_new_idx = torch.tensor([config.image_new_idx], dtype=torch.long)
         self.register_buffer('image_newline_idx', image_newline_idx, persistent=False)
@@ -505,7 +505,7 @@ class TarsierForConditionalGeneration(TarsierPreTrainedModel):
             final_labels = None
 
         return final_embedding, final_attention_mask, final_labels, position_ids
-    
+
     def add_split_tokens(self, image_features):
         num_images, num_image_patches, embed_dim = image_features.shape
         num_height_patches, num_width_patches = int(math.sqrt(num_image_patches)), int(math.sqrt(num_image_patches))
@@ -596,7 +596,7 @@ class TarsierForConditionalGeneration(TarsierPreTrainedModel):
         if inputs_embeds is None:
             # 1. Extra the input embeddings
             inputs_embeds = self.get_input_embeddings()(input_ids)
-            
+
             # 2. Merge text and images
             if pixel_values is not None and input_ids.shape[1] != 1:
                 pixel_values = pixel_values.to(dtype=self.vision_tower.dtype)

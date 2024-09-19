@@ -12,27 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from models.modeling_tarsier import TarsierForConditionalGeneration, LlavaConfig
-from dataset.processor import Processor
+from tarsier.dataset.processor import Processor
 import torch
 import base64
-from tools.color import Color
+from tarsier.tools.color import Color
 
-def load_model_and_processor(model_name_or_path, max_n_frames=8):
+def load_model_and_processor(model_name_or_path, max_n_frames=8, attn_implementation=None):
     print(Color.red(f"Load model and processor from: {model_name_or_path}; with max_n_frames={max_n_frames}"), flush=True)
     processor = Processor(
         model_name_or_path,
         max_n_frames=max_n_frames,
     )
-    model_config = LlavaConfig.from_pretrained(
-        model_name_or_path,
-        trust_remote_code=True,
-    )
     model = TarsierForConditionalGeneration.from_pretrained(
         model_name_or_path,
-        config=model_config,
         device_map='auto',
         torch_dtype=torch.float16,
-        trust_remote_code=True
+        attn_implementation=attn_implementation,
     )
     model.eval()
     return model, processor
@@ -41,4 +36,3 @@ def file_to_base64(img_path):
     with open(img_path, 'rb') as video_file:
         video_b64_str = base64.b64encode(video_file.read()).decode()
     return video_b64_str
-
