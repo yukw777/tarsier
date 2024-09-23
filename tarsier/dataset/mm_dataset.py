@@ -11,9 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from dataset.utils import get_visual_type, sample_frame_indices
+from tarsier.dataset.utils import get_visual_type, sample_frame_indices
 from .processor import Processor
-from tools.rw_utils import read_jsonlines
+from tarsier.tools.rw_utils import read_jsonlines
 
 class MMDataset(object):
     def __init__(self, ann_path="", anns=None, processor:Processor=None):
@@ -29,7 +29,7 @@ class MMDataset(object):
 
     def __len__(self):
         return len(self.anns)
-    
+
     def __getitem__(self, index):
         try:
             ann = self.anns[index]
@@ -47,7 +47,7 @@ class MMDataset(object):
                     if get_visual_type(img_file) == 'image':
                         visual_files.append(img_file)
                 frame_indices = sample_frame_indices(start_frame=0, total_frames=len(visual_files), n_frames=min(len(visual_files), self.processor.max_n_frames))
-                visual_files = [v for i,v in enumerate(visual_files) if i in frame_indices]    
+                visual_files = [v for i,v in enumerate(visual_files) if i in frame_indices]
             else:
                 if get_visual_type(video_file) in ['image', 'video', 'gif']:
                     visual_files.append(video_file)
