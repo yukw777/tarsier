@@ -173,7 +173,7 @@ numpy = ">=1.14.0"
 name = "einops"
 version = "0.8.0"
 description = "A new flavour of deep learning operations"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "einops-0.8.0-py3-none-any.whl", hash = "sha256:9572fb63046264a862693b0a87088af3bdc8c068fde03de63453cbbde245465f"},
@@ -200,7 +200,7 @@ typing = ["typing-extensions (>=4.12.2)"]
 name = "flash-attn"
 version = "2.6.3"
 description = "Flash Attention: Fast and Memory-Efficient Exact Attention"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "flash_attn-2.6.3.tar.gz", hash = "sha256:5bfae9500ad8e7d2937ebccb4906f3bc464d1bf66eedd0e4adabd520811c7b52"},
@@ -1536,4 +1536,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "bbcd9547ea9dee70b36d22712cc2593a93551f7a885142c976694d00f4fe3fcf"
+content-hash = "4fb15169613caa5cb96d0f7bbc6ee3a2f91f251e46167c591a8e03fa958bbd75"
