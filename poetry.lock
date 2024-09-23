@@ -1533,7 +1533,10 @@ h2 = ["h2 (>=4,<5)"]
 socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
 zstd = ["zstandard (>=0.18.0)"]
 
+[extras]
+flash-attn = ["flash-attn"]
+
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "4fb15169613caa5cb96d0f7bbc6ee3a2f91f251e46167c591a8e03fa958bbd75"
+content-hash = "8e15584c57482954b46966a782c4aec3f5da9bd9e707730448851eda0dff2c18"
